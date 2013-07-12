@@ -3,7 +3,8 @@ package org.wololo.geojson;
 public class FeatureCollection extends GeoJSON {
 	public Feature[] features;
 	
-	FeatureCollection() {
+	public FeatureCollection(Feature[] features) {
 		super();
+		this.features = features;
 	}
 }

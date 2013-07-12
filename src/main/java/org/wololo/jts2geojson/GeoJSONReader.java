@@ -14,7 +14,10 @@ public class GeoJSONReader {
 
 	public Geometry read(String json) {
 		GeoJSON geoJSON = GeoJSONFactory.create(json);
-
+		return read(geoJSON);
+	}
+	
+	public Geometry read(GeoJSON geoJSON) {
 		if (geoJSON instanceof Point) {
 			return convert((Point) geoJSON);
 		} else if (geoJSON instanceof LineString) {
