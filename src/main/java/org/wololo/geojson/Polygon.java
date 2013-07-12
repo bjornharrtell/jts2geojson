@@ -1,7 +1,9 @@
 package org.wololo.geojson;
 
-public class Polygon extends GeoJSON {
+public class Polygon extends Geometry {
 	public double[][][] coordinates;
+	
+	Polygon() {	}
 	
 	public Polygon(double [][][] coordinates) {
 		super();

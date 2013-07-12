@@ -1,11 +1,9 @@
 package org.wololo.geojson;
 
-public class Point extends GeoJSON {
+public class Point extends Geometry {
 	public double[] coordinates;
 	
-	public Point() {
-		super();
-	}
+	Point() { }
 	
 	public Point(double [] coordinates) {
 		super();

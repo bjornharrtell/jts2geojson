@@ -2,38 +2,97 @@ package org.wololo.jts2geojson;
 
 import org.wololo.geojson.*;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.PrecisionModel;
 
 public class GeoJSONReader {
-	
-	static public Geometry fromGeoJSON(String json) {
-		
-		// TODO: identify json type, use jackson deserialization
-		
-		throw new UnsupportedOperationException();
+	final static GeometryFactory factory = new GeometryFactory(
+			new PrecisionModel(PrecisionModel.FLOATING));
+
+	public Geometry read(String json) {
+		GeoJSON geoJSON = GeoJSONFactory.create(json);
+
+		if (geoJSON instanceof Point) {
+			return convert((Point) geoJSON);
+		} else if (geoJSON instanceof LineString) {
+			return convert((LineString) geoJSON);
+		} else if (geoJSON instanceof Polygon) {
+			return convert((Polygon) geoJSON);
+		} else if (geoJSON instanceof MultiPoint) {
+			return convert((MultiPoint) geoJSON);
+		} else if (geoJSON instanceof MultiLineString) {
+			return convert((MultiLineString) geoJSON);
+		} else if (geoJSON instanceof MultiPolygon) {
+			return convert((MultiPolygon) geoJSON);
+		} else {
+			throw new UnsupportedOperationException();
+		}
 	}
-		
-	static Geometry convert(Point point) {
-		throw new UnsupportedOperationException();
+
+	Geometry convert(Point point) {
+		return factory.createPoint(convert(point.coordinates));
 	}
-	static Geometry convert(MultiPoint multiPoint) {
-		throw new UnsupportedOperationException();
+
+	Geometry convert(MultiPoint multiPoint) {
+		return factory.createMultiPoint(convert(multiPoint.coordinates));
 	}
-	
-	static Geometry convert(LineString lineString) {
-		throw new UnsupportedOperationException();
+
+	Geometry convert(LineString lineString) {
+		return factory.createLineString(convert(lineString.coordinates));
 	}
-	
-	static Geometry convert(MultiLineString multiLineString) {
-		throw new UnsupportedOperationException();
+
+	Geometry convert(MultiLineString multiLineString) {
+		int size = multiLineString.coordinates.length;
+		com.vividsolutions.jts.geom.LineString[] lineStrings = new com.vividsolutions.jts.geom.LineString[size];
+		for (int i = 0; i < size; i++) {
+			lineStrings[i] = factory
+					.createLineString(convert(multiLineString.coordinates[i]));
+		}
+		return factory.createMultiLineString(lineStrings);
 	}
-	
-	static Geometry convert(Polygon polygon) {
-		throw new UnsupportedOperationException();
+
+	Geometry convert(Polygon polygon) {
+		return convertToPolygon(polygon.coordinates);
 	}
-	
-	static Geometry convert(MultiPolygon multiPolygon) {
-		throw new UnsupportedOperationException();
+
+	com.vividsolutions.jts.geom.Polygon convertToPolygon(
+			double[][][] coordinates) {
+		LinearRing shell = factory.createLinearRing(convert(coordinates[0]));
+
+		if (coordinates.length > 1) {
+			int size = coordinates.length - 1;
+			LinearRing[] holes = new LinearRing[size];
+			for (int i = 0; i < size; i++) {
+				holes[i] = factory
+						.createLinearRing(convert(coordinates[i + 1]));
+			}
+			return factory.createPolygon(shell, holes);
+		} else {
+			return factory.createPolygon(shell);
+		}
+	}
+
+	Geometry convert(MultiPolygon multiPolygon) {
+		int size = multiPolygon.coordinates.length;
+		com.vividsolutions.jts.geom.Polygon[] polygons = new com.vividsolutions.jts.geom.Polygon[size];
+		for (int i = 0; i < size; i++) {
+			polygons[i] = convertToPolygon(multiPolygon.coordinates[i]);
+		}
+		return factory.createMultiPolygon(polygons);
+	}
+
+	Coordinate convert(double[] c) {
+		return new Coordinate(c[0], c[1]);
+	}
+
+	Coordinate[] convert(double[][] ca) {
+		Coordinate[] coordinates = new Coordinate[ca.length];
+		for (int i = 0; i < ca.length; i++) {
+			coordinates[i] = convert(ca[i]);
+		}
+		return coordinates;
 	}
 }

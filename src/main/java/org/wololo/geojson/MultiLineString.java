@@ -1,7 +1,9 @@
 package org.wololo.geojson;
 
-public class MultiLineString extends GeoJSON {
+public class MultiLineString extends Geometry {
 	public double[][][] coordinates;
+	
+	MultiLineString() { }
 	
 	public MultiLineString(double [][][] coordinates) {
 		super();

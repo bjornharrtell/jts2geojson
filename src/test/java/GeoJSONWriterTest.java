@@ -1,11 +1,11 @@
 import java.io.IOException;
 
 import org.junit.Test;
-import org.wololo.geojson.GeoJSON;
+import org.wololo.jts2geojson.GeoJSONReader;
 import org.wololo.jts2geojson.GeoJSONWriter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
@@ -14,57 +14,47 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
-
 public class GeoJSONWriterTest {
 
 	@Test
 	public void test() throws IOException {
+		GeoJSONWriter writer = new GeoJSONWriter();
+		
 		Point point = new GeometryFactory().createPoint(new Coordinate(1, 1));
+		String json = writer.write(point);
+		System.out.println(json);
 		
-		GeoJSON geoJSON = GeoJSONWriter.fromJts(point);
-		
-		System.out.println(geoJSON);
-		
+		GeoJSONReader reader = new GeoJSONReader();
+		Geometry geometry = reader.read(json);
+		System.out.println(geometry);
 		
 		LineString lineString = new GeometryFactory().createLineString(new Coordinate[] { 
 				new Coordinate(1, 1),
 				new Coordinate(1, 2),
 				new Coordinate(2, 2),
 				new Coordinate(1, 1)});
-		
-		geoJSON = GeoJSONWriter.fromJts(lineString);
-		
-		System.out.println(geoJSON);
-		
+		json = writer.write(lineString);
+		System.out.println(json);
 		
 		Polygon polygon = new GeometryFactory().createPolygon(lineString.getCoordinates());
-		
-		geoJSON = GeoJSONWriter.fromJts(polygon);
-		
-		System.out.println(geoJSON);
-		
+		json = writer.write(polygon);
+		System.out.println(json);
 		
 		MultiPoint multiPoint = new GeometryFactory().createMultiPoint(lineString.getCoordinates());
-		
-		geoJSON = GeoJSONWriter.fromJts(multiPoint);
-		
-		System.out.println(geoJSON);
+		json = writer.write(multiPoint);
+		System.out.println(json);
 		
 		
 		MultiLineString multiLineString = new GeometryFactory().createMultiLineString(new LineString[] {lineString, lineString});
-		
-		geoJSON = GeoJSONWriter.fromJts(multiLineString);
-		
-		System.out.println(geoJSON);
-		
+		json = writer.write(multiLineString);
+		System.out.println(json);
 		
 		MultiPolygon multiPolygon = new GeometryFactory().createMultiPolygon(new Polygon[] {polygon, polygon});
+		json = writer.write(multiPolygon);
+		System.out.println(json);
 		
-		geoJSON = GeoJSONWriter.fromJts(multiPolygon);
-		
-		System.out.println(geoJSON);
-		
-		
+		geometry = reader.read(json);
+		System.out.println(geometry);
 	}
 
 }

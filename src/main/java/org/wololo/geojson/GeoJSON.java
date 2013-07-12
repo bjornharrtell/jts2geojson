@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public abstract class GeoJSON {
+	static final ObjectMapper mapper = new ObjectMapper();
+	
 	public String type;
 	
 	public GeoJSON() {
@@ -12,7 +14,6 @@ public abstract class GeoJSON {
 	}
 	
 	public String toString() {
-		ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.writeValueAsString(this);
 		} catch (JsonProcessingException e) {

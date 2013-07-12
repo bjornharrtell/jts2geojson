@@ -1,7 +1,9 @@
 package org.wololo.geojson;
 
-public class MultiPoint extends GeoJSON {
+public class MultiPoint extends Geometry {
 	public double[][] coordinates;
+	
+	MultiPoint() { }
 	
 	public MultiPoint(double [][] coordinates) {
 		super();
