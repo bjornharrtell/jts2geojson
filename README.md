@@ -16,15 +16,24 @@ This library can convert JTS geometries to GeoJSON and back. Its API is similar 
 
 ## Features and FeatureCollections
 
-JTS does not handle Features and FeatureCollections but they are supported. Example:
+JTS does not have anything like GeoJSON Feature or FeatureCollection but they can be parsed by this library. Example:
 
 ```java
 
-  // assumes json is a String containing a GeoJSON Feature
-  // the feature object contains a geometry and a Map of properties
+  // parse Feature or FeatureCollection
   Feature feature = (Feature) GeoJSONFactory.create(json);
+  FeatureCollection featureCollection = (FeatureCollection) GeoJSONFactory.create(json);
   
+  // parse Geometry from Feature
   GeoJSONReader reader = new GeoJSONReader();
   Geometry geometry = reader.read(feature.geometry);
+  geometry = reader.read(featureCollection.features[0].geometry);
+  
+  // create and serialize a FeatureCollection
+  List<Features> features = new ArrayList<Features>();
+  Map<String, Object> properties = new HashMap<String, Object>();
+  features.add(new Feature(geometry, properties);
+  GeoJSONWriter writer = new GeoJSONWriter();
+  String json = writer.write(features);
 
 ```

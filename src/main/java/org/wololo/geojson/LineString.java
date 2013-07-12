@@ -1,11 +1,13 @@
 package org.wololo.geojson;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LineString extends Geometry {
-	public double[][] coordinates;
+	public final double[][] coordinates;
 	
-	LineString() { }
-	
-	public LineString(double [][] coordinates) {
+	@JsonCreator
+	public LineString(@JsonProperty("coordinates") double [][] coordinates) {
 		super();
 		this.coordinates = coordinates;
 	}

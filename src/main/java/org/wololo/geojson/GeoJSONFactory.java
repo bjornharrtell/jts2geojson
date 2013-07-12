@@ -15,18 +15,29 @@ public class GeoJSONFactory {
 		try {
 			JsonNode node = mapper.readTree(json);
 			String type = node.get("type").textValue();
-			if (type.equals("Feature")) {
-				JsonNode geometryNode = node.get("geometry");
-				Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), Map.class);
-				type = geometryNode.get("type").textValue();
-				Geometry geometry = readGeometry(geometryNode, type);
-				return new Feature(geometry, properties);
+			if (type.equals("FeatureCollection")) {
+				return readFeatureCollection(node);
+			} else if (type.equals("Feature")) {
+				return readFeature(node);
 			} else {
 				return readGeometry(node, type);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	static FeatureCollection readFeatureCollection(JsonNode node) throws JsonParseException, JsonMappingException, IOException {
+		Feature[] features = mapper.readValue(node.get("features").traverse(), Feature[].class);
+		return new FeatureCollection(features);
+	}
+	
+	static Feature readFeature(JsonNode node) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
+		JsonNode geometryNode = node.get("geometry");
+		Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), Map.class);
+		String type = geometryNode.get("type").textValue();
+		Geometry geometry = readGeometry(geometryNode, type);
+		return new Feature(geometry, properties);
 	}
 	
 	static Geometry readGeometry(JsonNode node, String type) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {

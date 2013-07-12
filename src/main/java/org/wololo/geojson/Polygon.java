@@ -1,11 +1,13 @@
 package org.wololo.geojson;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Polygon extends Geometry {
-	public double[][][] coordinates;
+	public final double[][][] coordinates;
 	
-	Polygon() {	}
-	
-	public Polygon(double [][][] coordinates) {
+	@JsonCreator
+	public Polygon(@JsonProperty("coordinates") double [][][] coordinates) {
 		super();
 		this.coordinates = coordinates;
 	}

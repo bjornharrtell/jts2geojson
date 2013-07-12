@@ -1,9 +1,13 @@
 package org.wololo.geojson;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FeatureCollection extends GeoJSON {
-	public Feature[] features;
+	public final Feature[] features;
 	
-	public FeatureCollection(Feature[] features) {
+	@JsonCreator
+	public FeatureCollection(@JsonProperty("features") Feature[] features) {
 		super();
 		this.features = features;
 	}
