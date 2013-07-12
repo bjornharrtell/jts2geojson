@@ -1,6 +1,6 @@
 ## Introduction
 
-This library can convert JTS geometries to GeoJSON and back. Its API is similar to other io.* classes in JTS.
+This Java library can convert JTS geometries to GeoJSON and back. Its API is similar to other io.* classes in JTS.
 
 ## Usage
 
