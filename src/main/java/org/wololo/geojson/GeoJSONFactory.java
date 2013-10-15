@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GeoJSONFactory {
-	static final ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 
 	public static GeoJSON create(String json) {
 		try {
@@ -27,12 +27,12 @@ public class GeoJSONFactory {
 		}
 	}
 	
-	static FeatureCollection readFeatureCollection(JsonNode node) throws JsonParseException, JsonMappingException, IOException {
+	private static FeatureCollection readFeatureCollection(JsonNode node) throws JsonParseException, JsonMappingException, IOException {
 		Feature[] features = mapper.readValue(node.get("features").traverse(), Feature[].class);
 		return new FeatureCollection(features);
 	}
 	
-	static Feature readFeature(JsonNode node) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
+	private static Feature readFeature(JsonNode node) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
 		JsonNode geometryNode = node.get("geometry");
 		Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), Map.class);
 		String type = geometryNode.get("type").textValue();
@@ -40,7 +40,7 @@ public class GeoJSONFactory {
 		return new Feature(geometry, properties);
 	}
 	
-	static Geometry readGeometry(JsonNode node, String type) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
+	private static Geometry readGeometry(JsonNode node, String type) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
 		Geometry geometry = (Geometry) mapper.readValue(node.traverse(),
 				Class.forName("org.wololo.geojson." + type));
 		return geometry;

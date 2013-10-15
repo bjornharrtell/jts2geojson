@@ -43,7 +43,7 @@ public class GeoJSONWriter {
 	}
 	
 	public org.wololo.geojson.Feature writeGeoJSONFeature(Feature feature) {
-		return new org.wololo.geojson.Feature(writeGeoJSONGeometry(feature.geometry), feature.properties);
+		return new org.wololo.geojson.Feature(writeGeoJSONGeometry(feature.getGeometry()), feature.getProperties());
 	}
 	
 	public String write(List<Feature> features) {
@@ -96,7 +96,7 @@ public class GeoJSONWriter {
 		double[][][][] polygons = new double[size][][][];
 		for (int i = 0; i < size; i++) {
 			polygons[i] = ((org.wololo.geojson.Polygon) convert((Polygon) multiPolygon
-					.getGeometryN(i))).coordinates;
+					.getGeometryN(i))).getCoordinates();
 		}
 		return new org.wololo.geojson.MultiPolygon(polygons);
 	}

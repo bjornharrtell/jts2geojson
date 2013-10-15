@@ -1,3 +1,4 @@
+package org.wololo.jts2geojson;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public class GeoJSONFactoryTest {
 		FeatureCollection fc = new FeatureCollection(new Feature[] {feature, feature});
 		System.out.println(fc);
 		
-		System.out.println(new GeoJSONReader().read(fc.features[0].geometry));
+		System.out.println(new GeoJSONReader().read(fc.getFeatures()[0].getGeometry()));
 		
 		GeoJSON a = GeoJSONFactory.create(feature.toString());
 		System.out.println(a);

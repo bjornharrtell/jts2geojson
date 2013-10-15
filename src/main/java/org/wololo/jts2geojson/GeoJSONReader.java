@@ -36,29 +36,29 @@ public class GeoJSONReader {
 	}
 
 	Geometry convert(Point point) {
-		return factory.createPoint(convert(point.coordinates));
+		return factory.createPoint(convert(point.getCoordinates()));
 	}
 
 	Geometry convert(MultiPoint multiPoint) {
-		return factory.createMultiPoint(convert(multiPoint.coordinates));
+		return factory.createMultiPoint(convert(multiPoint.getCoordinates()));
 	}
 
 	Geometry convert(LineString lineString) {
-		return factory.createLineString(convert(lineString.coordinates));
+		return factory.createLineString(convert(lineString.getCoordinates()));
 	}
 
 	Geometry convert(MultiLineString multiLineString) {
-		int size = multiLineString.coordinates.length;
+		int size = multiLineString.getCoordinates().length;
 		com.vividsolutions.jts.geom.LineString[] lineStrings = new com.vividsolutions.jts.geom.LineString[size];
 		for (int i = 0; i < size; i++) {
 			lineStrings[i] = factory
-					.createLineString(convert(multiLineString.coordinates[i]));
+					.createLineString(convert(multiLineString.getCoordinates()[i]));
 		}
 		return factory.createMultiLineString(lineStrings);
 	}
 
 	Geometry convert(Polygon polygon) {
-		return convertToPolygon(polygon.coordinates);
+		return convertToPolygon(polygon.getCoordinates());
 	}
 
 	com.vividsolutions.jts.geom.Polygon convertToPolygon(
@@ -79,10 +79,10 @@ public class GeoJSONReader {
 	}
 
 	Geometry convert(MultiPolygon multiPolygon) {
-		int size = multiPolygon.coordinates.length;
+		int size = multiPolygon.getCoordinates().length;
 		com.vividsolutions.jts.geom.Polygon[] polygons = new com.vividsolutions.jts.geom.Polygon[size];
 		for (int i = 0; i < size; i++) {
-			polygons[i] = convertToPolygon(multiPolygon.coordinates[i]);
+			polygons[i] = convertToPolygon(multiPolygon.getCoordinates()[i]);
 		}
 		return factory.createMultiPolygon(polygons);
 	}

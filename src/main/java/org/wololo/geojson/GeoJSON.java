@@ -7,14 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 public abstract class GeoJSON {
-	static final ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 	
 	@JsonProperty("type")
-	public String type;
+	private String type;
 	
 	@JsonCreator
 	public GeoJSON() {
-		type = getClass().getSimpleName();
+		setType(getClass().getSimpleName());
 	}
 	
 	public String toString() {
@@ -23,5 +23,13 @@ public abstract class GeoJSON {
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
