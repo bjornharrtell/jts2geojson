@@ -1,5 +1,7 @@
 package org.wololo.jts2geojson;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -20,6 +22,11 @@ public class GeoJSONFactoryTest {
 		properties.put("test",1);
 		Feature feature = new Feature(geometry, properties);
 		System.out.println(feature);
+		
+		List<Feature> features = new ArrayList<Feature>();
+		features.add(feature);
+		features.add(feature);
+		System.out.println(features);
 		
 		FeatureCollection fc = new FeatureCollection(new Feature[] {feature, feature});
 		System.out.println(fc);

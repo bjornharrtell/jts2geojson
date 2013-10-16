@@ -7,7 +7,8 @@ This Java library can convert JTS geometries to GeoJSON and back. Its API is sim
 ```java
 
   GeoJSONWriter writer = new GeoJSONWriter();
-  String json = writer.write(geometry);
+  GeoJSON json = writer.write(geometry);
+  String jsonstring = json.toString();
 
   GeoJSONReader reader = new GeoJSONReader();
   Geometry geometry = reader.read(json);
@@ -26,14 +27,14 @@ JTS does not have anything like GeoJSON Feature or FeatureCollection but they ca
   
   // parse Geometry from Feature
   GeoJSONReader reader = new GeoJSONReader();
-  Geometry geometry = reader.read(feature.geometry);
-  geometry = reader.read(featureCollection.features[0].geometry);
+  Geometry geometry = reader.read(feature.getGeometry());
+  geometry = reader.read(featureCollection.getFeatures()[0].getGeometry());
   
   // create and serialize a FeatureCollection
   List<Features> features = new ArrayList<Features>();
   Map<String, Object> properties = new HashMap<String, Object>();
   features.add(new Feature(geometry, properties);
   GeoJSONWriter writer = new GeoJSONWriter();
-  String json = writer.write(features);
+  GeoJSON json = writer.write(features);
 
 ```

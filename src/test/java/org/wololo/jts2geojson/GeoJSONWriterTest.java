@@ -2,6 +2,7 @@ package org.wololo.jts2geojson;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.wololo.geojson.GeoJSON;
 import org.wololo.jts2geojson.GeoJSONReader;
 import org.wololo.jts2geojson.GeoJSONWriter;
 
@@ -22,7 +23,7 @@ public class GeoJSONWriterTest {
 		GeoJSONWriter writer = new GeoJSONWriter();
 		
 		Point point = new GeometryFactory().createPoint(new Coordinate(1, 1));
-		String json = writer.write(point);
+		GeoJSON json = writer.write(point);
 		System.out.println(json);
 		
 		GeoJSONReader reader = new GeoJSONReader();

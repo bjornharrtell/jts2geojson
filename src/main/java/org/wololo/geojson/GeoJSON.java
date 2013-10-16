@@ -1,9 +1,12 @@
 package org.wololo.geojson;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 
 public abstract class GeoJSON {
@@ -20,8 +23,12 @@ public abstract class GeoJSON {
 	public String toString() {
 		try {
 			return mapper.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+		} catch (JsonGenerationException e) {
+			return "Unhandled exception occured when serializing this instance";
+		} catch (JsonMappingException e) {
+			return "Unhandled exception occured when serializing this instance";
+		} catch (IOException e) {
+			return "Unhandled exception occured when serializing this instance";
 		}
 	}
 

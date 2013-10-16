@@ -3,10 +3,10 @@ package org.wololo.geojson;
 import java.io.IOException;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class GeoJSONFactory {
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -14,7 +14,7 @@ public class GeoJSONFactory {
 	public static GeoJSON create(String json) {
 		try {
 			JsonNode node = mapper.readTree(json);
-			String type = node.get("type").textValue();
+			String type = node.get("type").asText();
 			if (type.equals("FeatureCollection")) {
 				return readFeatureCollection(node);
 			} else if (type.equals("Feature")) {
@@ -35,7 +35,7 @@ public class GeoJSONFactory {
 	private static Feature readFeature(JsonNode node) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
 		JsonNode geometryNode = node.get("geometry");
 		Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), Map.class);
-		String type = geometryNode.get("type").textValue();
+		String type = geometryNode.get("type").asText();
 		Geometry geometry = readGeometry(geometryNode, type);
 		return new Feature(geometry, properties);
 	}

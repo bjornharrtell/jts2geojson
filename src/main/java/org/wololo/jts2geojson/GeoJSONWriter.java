@@ -2,6 +2,8 @@ package org.wololo.jts2geojson;
 
 import java.util.List;
 
+import org.wololo.geojson.Feature;
+
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.LineString;
@@ -14,12 +16,8 @@ import com.vividsolutions.jts.geom.Polygon;
 public class GeoJSONWriter {
 
 	final static GeoJSONReader reader = new GeoJSONReader();
-	
-	public String write(Geometry geometry) {
-		return writeGeoJSONGeometry(geometry).toString();
-	}
-	
-	org.wololo.geojson.Geometry writeGeoJSONGeometry(Geometry geometry) {
+		
+	public org.wololo.geojson.Geometry write(Geometry geometry) {
 		Class<? extends Geometry> c = geometry.getClass();
 		if (c.equals(Point.class)) {
 			return convert((Point) geometry);
@@ -38,21 +36,13 @@ public class GeoJSONWriter {
 		}
 	}
 	
-	public String write(Feature feature) {
-		return writeGeoJSONFeature(feature).toString();
-	}
-	
-	public org.wololo.geojson.Feature writeGeoJSONFeature(Feature feature) {
-		return new org.wololo.geojson.Feature(writeGeoJSONGeometry(feature.getGeometry()), feature.getProperties());
-	}
-	
-	public String write(List<Feature> features) {
+	public org.wololo.geojson.FeatureCollection write(List<Feature> features) {
 		int size = features.size();
 		org.wololo.geojson.Feature[] featuresJson = new org.wololo.geojson.Feature[size];
 		for (int i=0; i<size; i++) {
-			featuresJson[i] = writeGeoJSONFeature(features.get(i));
+			featuresJson[i] = features.get(i);
 		}
-		return new org.wololo.geojson.FeatureCollection(featuresJson).toString();
+		return new org.wololo.geojson.FeatureCollection(featuresJson);
 	}
 
 	org.wololo.geojson.Point convert(Point point) {
