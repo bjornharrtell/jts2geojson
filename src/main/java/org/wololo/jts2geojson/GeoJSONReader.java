@@ -51,8 +51,7 @@ public class GeoJSONReader {
 		int size = multiLineString.getCoordinates().length;
 		com.vividsolutions.jts.geom.LineString[] lineStrings = new com.vividsolutions.jts.geom.LineString[size];
 		for (int i = 0; i < size; i++) {
-			lineStrings[i] = factory
-					.createLineString(convert(multiLineString.getCoordinates()[i]));
+			lineStrings[i] = factory.createLineString(convert(multiLineString.getCoordinates()[i]));
 		}
 		return factory.createMultiLineString(lineStrings);
 	}
@@ -61,16 +60,14 @@ public class GeoJSONReader {
 		return convertToPolygon(polygon.getCoordinates());
 	}
 
-	com.vividsolutions.jts.geom.Polygon convertToPolygon(
-			double[][][] coordinates) {
+	com.vividsolutions.jts.geom.Polygon convertToPolygon(double[][][] coordinates) {
 		LinearRing shell = factory.createLinearRing(convert(coordinates[0]));
 
 		if (coordinates.length > 1) {
 			int size = coordinates.length - 1;
 			LinearRing[] holes = new LinearRing[size];
 			for (int i = 0; i < size; i++) {
-				holes[i] = factory
-						.createLinearRing(convert(coordinates[i + 1]));
+				holes[i] = factory.createLinearRing(convert(coordinates[i + 1]));
 			}
 			return factory.createPolygon(shell, holes);
 		} else {

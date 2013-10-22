@@ -2,11 +2,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.wololo</groupId>
   <artifactId>jts2geojson</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>jts2geojson</name>
   <description>JTS to GeoJSON converter</description>
-  <url></url>
+  <url>https://github.com/bjornharrtell/jts2geojson</url>
   
   <licenses>
     <license>

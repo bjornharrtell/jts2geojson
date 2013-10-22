@@ -65,8 +65,7 @@ public class GeoJSONWriter {
 		int size = multiLineString.getNumGeometries();
 		double[][][] lineStrings = new double[size][][];
 		for (int i = 0; i < size; i++) {
-			lineStrings[i] = convert(multiLineString.getGeometryN(i)
-					.getCoordinates());
+			lineStrings[i] = convert(multiLineString.getGeometryN(i).getCoordinates());
 		}
 		return new org.wololo.geojson.MultiLineString(lineStrings);
 	}
@@ -85,8 +84,7 @@ public class GeoJSONWriter {
 		int size = multiPolygon.getNumGeometries();
 		double[][][][] polygons = new double[size][][][];
 		for (int i = 0; i < size; i++) {
-			polygons[i] = ((org.wololo.geojson.Polygon) convert((Polygon) multiPolygon
-					.getGeometryN(i))).getCoordinates();
+			polygons[i] = convert((Polygon) multiPolygon.getGeometryN(i)).getCoordinates();
 		}
 		return new org.wololo.geojson.MultiPolygon(polygons);
 	}
