@@ -28,10 +28,27 @@ public class GeoJSONFactory {
 		}
 	}
 	
-	private static FeatureCollection readFeatureCollection(JsonNode node)
-			throws JsonParseException, JsonMappingException, IOException {
-		Feature[] features = mapper.readValue(node.get("features").traverse(), Feature[].class);
-		return new FeatureCollection(features);
+	/**
+	 * read a feature colleciton from a JsonNode
+	 *
+	 * @param node
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	private static FeatureCollection readFeatureCollection(JsonNode node) throws JsonParseException, JsonMappingException, IOException,
+    ClassNotFoundException {
+		Iterator<JsonNode> it = node.get("features").iterator();
+		// iterate through all the features and read them one at a time
+		List<Feature> features = new ArrayList<>();
+		while (it.hasNext()) {
+			JsonNode jFeature = it.next();
+			features.add(readFeature(jFeature));
+		}
+        
+		return new FeatureCollection(features.toArray(new Feature[features.size()]));
 	}
 	
 	private static Feature readFeature(JsonNode node)
