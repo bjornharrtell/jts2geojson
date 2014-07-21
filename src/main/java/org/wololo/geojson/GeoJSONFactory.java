@@ -2,6 +2,9 @@ package org.wololo.geojson;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.JsonNode;
@@ -42,7 +45,7 @@ public class GeoJSONFactory {
     ClassNotFoundException {
 		Iterator<JsonNode> it = node.get("features").iterator();
 		// iterate through all the features and read them one at a time
-		List<Feature> features = new ArrayList<>();
+		List<Feature> features = new ArrayList<Feature>();
 		while (it.hasNext()) {
 			JsonNode jFeature = it.next();
 			features.add(readFeature(jFeature));
