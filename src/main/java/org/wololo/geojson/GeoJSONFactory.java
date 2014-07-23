@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.JavaType;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class GeoJSONFactory {
 	private static final ObjectMapper mapper = new ObjectMapper();
@@ -31,20 +32,9 @@ public class GeoJSONFactory {
 		}
 	}
 	
-	/**
-	 * read a feature colleciton from a JsonNode
-	 *
-	 * @param node
-	 * @return
-	 * @throws JsonParseException
-	 * @throws JsonMappingException
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	private static FeatureCollection readFeatureCollection(JsonNode node) throws JsonParseException, JsonMappingException, IOException,
-    ClassNotFoundException {
+	private static FeatureCollection readFeatureCollection(JsonNode node)
+			throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
 		Iterator<JsonNode> it = node.get("features").iterator();
-		// iterate through all the features and read them one at a time
 		List<Feature> features = new ArrayList<Feature>();
 		while (it.hasNext()) {
 			JsonNode jFeature = it.next();
