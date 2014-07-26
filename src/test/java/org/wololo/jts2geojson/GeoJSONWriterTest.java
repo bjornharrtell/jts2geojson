@@ -2,7 +2,10 @@ package org.wololo.jts2geojson;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.wololo.geojson.Feature;
+import org.wololo.geojson.FeatureCollection;
 import org.wololo.geojson.GeoJSON;
+import org.wololo.geojson.GeoJSONFactory;
 import org.wololo.jts2geojson.GeoJSONReader;
 import org.wololo.jts2geojson.GeoJSONWriter;
 
@@ -23,7 +26,7 @@ public class GeoJSONWriterTest {
 		GeoJSONWriter writer = new GeoJSONWriter();
 		
 		Point point = new GeometryFactory().createPoint(new Coordinate(1, 1));
-		GeoJSON json = writer.write(point);
+		org.wololo.geojson.Geometry json = writer.write(point);
 		System.out.println(json);
 		
 		GeoJSONReader reader = new GeoJSONReader();
@@ -57,6 +60,15 @@ public class GeoJSONWriterTest {
 		
 		geometry = reader.read(json);
 		System.out.println(geometry);
+		
+		Feature feature1 = new Feature(json, null);
+		Feature feature2 = new Feature(json, null);
+		
+		FeatureCollection featureCollection = new FeatureCollection(new Feature[] { feature1, feature2 } );
+		String fcstr = featureCollection.toString();
+		System.out.println(fcstr);
+		
+		FeatureCollection featureCollection2 = (FeatureCollection) GeoJSONFactory.create(fcstr);
 	}
 
 }
