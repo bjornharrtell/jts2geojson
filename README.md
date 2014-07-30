@@ -2,6 +2,8 @@
 
 This Java library can convert JTS geometries to GeoJSON and back. Its API is similar to other io.* classes in JTS.
 
+[![Build Status](https://secure.travis-ci.org/bjornharrtell/jts2geojson.png?branch=master)](http://travis-ci.org/bjornharrtell/jts2geojson)
+
 ## Usage
 
 ```java
