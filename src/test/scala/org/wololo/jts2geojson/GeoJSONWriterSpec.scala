@@ -23,7 +23,7 @@ class GeoJSONWriterSpec extends WordSpec {
       val polygon = factory.createPolygon(lineString.getCoordinates())
 
       "expected result for Point" in {
-        val expected = """{"coordinates":[1.0,1.0],"type":"Point"}"""
+        val expected = """{"type":"Point","coordinates":[1.0,1.0]}"""
 
         val json = writer.write(point)
         assert(expected === json.toString)
@@ -34,30 +34,35 @@ class GeoJSONWriterSpec extends WordSpec {
 
       "expected result for LineString" in {
         val json = writer.write(lineString)
-        assert("""{"coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]],"type":"LineString"}""" === json.toString)
+        assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
+      }
+      
+      "expected result for LineString with id" in {
+        val json = writer.write(lineString)
+        assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
       }
 
       "expected result for Polygon" in {
         val json = writer.write(polygon);
-        assert("""{"coordinates":[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]],"type":"Polygon"}""" === json.toString)
+        assert("""{"type":"Polygon","coordinates":[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]]}""" === json.toString)
       }
 
       "expected result for MultiPoint" in {
         val multiPoint = factory.createMultiPoint(lineString.getCoordinates())
         val json = writer.write(multiPoint)
-        assert("""{"coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]],"type":"MultiPoint"}""" === json.toString)
+        assert("""{"type":"MultiPoint","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
       }
 
       "expected result for MultiLineString" in {
         val multiLineString = factory.createMultiLineString(Array(lineString, lineString))
         val json = writer.write(multiLineString)
-        assert("""{"coordinates":[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]],[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]],"type":"MultiLineString"}""" === json.toString)
+        assert("""{"type":"MultiLineString","coordinates":[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]],[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]]}""" === json.toString)
       }
 
       "expected result for MultiPolygon" in {
         val multiPolygon = factory.createMultiPolygon(Array(polygon, polygon))
         val json = writer.write(multiPolygon)
-        assert("""{"coordinates":[[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]],[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]]],"type":"MultiPolygon"}""" === json.toString)
+        assert("""{"type":"MultiPolygon","coordinates":[[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]],[[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]]]}""" === json.toString)
       }
 
       "expected result for FeatureCollection" in {
@@ -65,7 +70,7 @@ class GeoJSONWriterSpec extends WordSpec {
         val feature1 = new Feature(json, null)
         val feature2 = new Feature(json, null)
         val featureCollection = new FeatureCollection(Array(feature1, feature2))
-        assert("""{"features":[{"geometry":{"coordinates":[1.0,1.0],"type":"Point"},"properties":null,"type":"Feature"},{"geometry":{"coordinates":[1.0,1.0],"type":"Point"},"properties":null,"type":"Feature"}],"type":"FeatureCollection"}""" === featureCollection.toString)
+        assert("""{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[1.0,1.0]},"properties":null},{"type":"Feature","geometry":{"type":"Point","coordinates":[1.0,1.0]},"properties":null}]}""" === featureCollection.toString)
       }
     }
   }
