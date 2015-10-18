@@ -6,6 +6,7 @@ import org.wololo.geojson.Feature;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiLineString;
 import com.vividsolutions.jts.geom.MultiPoint;
@@ -31,6 +32,8 @@ public class GeoJSONWriter {
             return convert((MultiLineString) geometry);
         } else if (c.equals(MultiPolygon.class)) {
             return convert((MultiPolygon) geometry);
+        } else if (c.equals(GeometryCollection.class)) {
+            return convert((GeometryCollection) geometry);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -87,6 +90,15 @@ public class GeoJSONWriter {
             polygons[i] = convert((Polygon) multiPolygon.getGeometryN(i)).getCoordinates();
         }
         return new org.wololo.geojson.MultiPolygon(polygons);
+    }
+
+    org.wololo.geojson.GeometryCollection convert(GeometryCollection gc) {
+        int size = gc.getNumGeometries();
+        org.wololo.geojson.Geometry[] geometries = new org.wololo.geojson.Geometry[size];
+        for (int i = 0; i < size; i++) {
+            geometries[i] = write((Geometry) gc.getGeometryN(i));
+        }
+        return new org.wololo.geojson.GeometryCollection(geometries);
     }
 
     double[] convert(Coordinate coordinate) {
