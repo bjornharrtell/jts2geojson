@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-@JsonPropertyOrder({"type", "id", "geometry", "property"})
+@JsonPropertyOrder({"type", "id", "geometry", "properties"})
 public class Feature extends GeoJSON {
     @JsonInclude(Include.NON_EMPTY)
     private final Object id;
