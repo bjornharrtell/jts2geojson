@@ -30,6 +30,8 @@ public class GeoJSONReader {
             return convert((MultiLineString) geoJSON);
         } else if (geoJSON instanceof MultiPolygon) {
             return convert((MultiPolygon) geoJSON);
+        } else if (geoJSON instanceof GeometryCollection) {
+            return convert((GeometryCollection) geoJSON);
         } else {
             throw new UnsupportedOperationException();
         }
@@ -82,6 +84,15 @@ public class GeoJSONReader {
             polygons[i] = convertToPolygon(multiPolygon.getCoordinates()[i]);
         }
         return factory.createMultiPolygon(polygons);
+    }
+
+    Geometry convert(GeometryCollection gc) {
+        int size = gc.getGeometries().length;
+        com.vividsolutions.jts.geom.Geometry[] geometries = new com.vividsolutions.jts.geom.Geometry[size];
+        for (int i = 0; i < size; i++) {
+            geometries[i] = read(gc.getGeometries()[i]);
+        }
+        return factory.createGeometryCollection(geometries);
     }
 
     Coordinate convert(double[] c) {
