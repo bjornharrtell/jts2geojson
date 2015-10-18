@@ -1,2 +1,6 @@
 language: java
+sudo: false
+cache:
+  directories:
+  - $HOME/.m2
 install: mvn install -DskipTests=true -Dgpg.skip=true -Dmaven.javadoc.skip=true -B -V
