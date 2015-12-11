@@ -9,7 +9,7 @@ import org.wololo.geojson.FeatureCollection
 class GeoJSONWriterSpec extends WordSpec {
   "GeoJSONWriter" when {
     "writing GeoJSON from JTS object" should {
-      
+
       val reader = new GeoJSONReader()
       val writer = new GeoJSONWriter()
       val factory = new GeometryFactory()
@@ -36,7 +36,7 @@ class GeoJSONWriterSpec extends WordSpec {
         val json = writer.write(lineString)
         assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
       }
-      
+
       "expected result for LineString with id" in {
         val json = writer.write(lineString)
         assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
