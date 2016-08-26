@@ -17,13 +17,6 @@ public class MultiPoint extends Geometry {
         this.bbox = null;
     }
 
-    @JsonCreator
-    public MultiPoint(@JsonProperty("coordinates") double [][] coordinates, @JsonProperty("bbox") double [] bbox) {
-        super();
-        this.coordinates = coordinates;
-        this.bbox = bbox;
-    }
-
     public double[][] getCoordinates() {
         return coordinates;
     }
