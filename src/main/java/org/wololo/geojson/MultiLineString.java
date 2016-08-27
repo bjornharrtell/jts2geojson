@@ -17,13 +17,6 @@ public class MultiLineString extends Geometry {
         this.bbox = null;
     }
 
-    @JsonCreator
-    public MultiLineString(@JsonProperty("coordinates") double [][][] coordinates, @JsonProperty("bbox") double [] bbox) {
-        super();
-        this.coordinates = coordinates;
-        this.bbox = bbox;
-    }
-
     public double[][][] getCoordinates() {
         return coordinates;
     }
