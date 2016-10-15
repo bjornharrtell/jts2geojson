@@ -96,7 +96,12 @@ public class GeoJSONReader {
     }
 
     Coordinate convert(double[] c) {
-        return new Coordinate(c[0], c[1]);
+        if(c.length == 2){
+            return new Coordinate(c[0], c[1]);
+        }
+        else{
+            return new Coordinate(c[0], c[1], c[2]);
+        }
     }
 
     Coordinate[] convert(double[][] ca) {
