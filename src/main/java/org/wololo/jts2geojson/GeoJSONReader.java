@@ -73,7 +73,8 @@ public class GeoJSONReader {
             }
             return factory.createPolygon(shell, holes);
         } else {
-            return factory.createPolygon(shell);
+            //GeometryFactory in JTS 1.12 doesn't support the method createPolygon with only one parameter
+            return factory.createPolygon(shell, null);
         }
     }
 
