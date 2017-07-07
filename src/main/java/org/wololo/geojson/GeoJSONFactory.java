@@ -50,14 +50,23 @@ public class GeoJSONFactory {
         JavaType javaType = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
         Object id = node.get("id");
         Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), javaType);
-        String type = geometryNode.get("type").asText();
-        Geometry geometry = readGeometry(geometryNode, type);
+        Geometry geometry = readGeometry(geometryNode);
         return new Feature(id, geometry, properties);
     }
     
+    private static Geometry readGeometry(JsonNode node)
+            throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
+        if (!node.isNull()) {
+            final String type = node.get("type").asText();
+            return readGeometry(node, type);
+        } else {
+            return null;
+        }
+    }
+
     private static Geometry readGeometry(JsonNode node, String type)
             throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
-        Geometry geometry = (Geometry) mapper.readValue(node.traverse(), Class.forName("org.wololo.geojson." + type));
-        return geometry;
+        return (Geometry) mapper.readValue(node.traverse(), Class.forName("org.wololo.geojson." + type));
     }
+
 }

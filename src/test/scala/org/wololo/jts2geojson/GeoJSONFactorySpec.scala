@@ -35,6 +35,19 @@ class GeoJSONFactorySpec extends WordSpec {
           assert(expected == geoJSON.toString)
         }
 
+        "be identical to programmatically created Feature without geometry" in {
+          val feature = new Feature(null, properties)
+
+          val expected = """{"type":"Feature","geometry":null,"properties":{"test":1}}"""
+
+          val json = feature.toString
+          assert(expected == json)
+
+          val geoJSON = GeoJSONFactory.create(json)
+
+          assert(expected == geoJSON.toString)
+        }
+
         "be identical to programmatically created FeatureCollection" in {
           val expected = """{"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[1.0,1.0]},"properties":{"test":1}},{"type":"Feature","geometry":{"type":"Point","coordinates":[1.0,1.0]},"properties":{"test":1}}]}"""
 
