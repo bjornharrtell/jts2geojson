@@ -9,8 +9,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class GeoJSON {
-    private static final ObjectMapper mapper = new ObjectMapper();
-    
     @JsonProperty("type")
     private String type;
     
@@ -20,6 +18,8 @@ public abstract class GeoJSON {
     }
     
     public String toString() {
+        final ObjectMapper mapper = GeoJSONFactory.getConfig().getMapper();
+
         try {
             return mapper.writeValueAsString(this);
         } catch (JsonGenerationException e) {

@@ -10,15 +10,25 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.wololo.geojson.internals.Config;
 
 
 public class GeoJSONFactory {
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static Config config = new Config();
+
+    public static Config getConfig() {
+        return config;
+    }
+
+    public static void setConfig(Config config) {
+        if (config != null) {
+            GeoJSONFactory.config = config;
+        }
+    }
 
     public static GeoJSON create(String json) {
         try {
-            JsonNode node = mapper.readTree(json);
+            JsonNode node = config.getMapper().readTree(json);
             String type = node.get("type").asText();
             if (type.equals("FeatureCollection")) {
                 return readFeatureCollection(node);
@@ -47,9 +57,9 @@ public class GeoJSONFactory {
     private static Feature readFeature(JsonNode node)
             throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
         JsonNode geometryNode = node.get("geometry");
-        JavaType javaType = mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class);
+        JavaType javaType = config.getMapper().getTypeFactory().constructMapType(Map.class, String.class, Object.class);
         Object id = node.get("id");
-        Map<String, Object> properties = mapper.readValue(node.get("properties").traverse(), javaType);
+        Map<String, Object> properties = config.getMapper().readValue(node.get("properties").traverse(), javaType);
         Geometry geometry = readGeometry(geometryNode);
         return new Feature(id, geometry, properties);
     }
@@ -66,7 +76,7 @@ public class GeoJSONFactory {
 
     private static Geometry readGeometry(JsonNode node, String type)
             throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
-        return (Geometry) mapper.readValue(node.traverse(), Class.forName("org.wololo.geojson." + type));
+        return (Geometry) config.getMapper().readValue(node.traverse(), Class.forName("org.wololo.geojson." + type));
     }
 
 }
