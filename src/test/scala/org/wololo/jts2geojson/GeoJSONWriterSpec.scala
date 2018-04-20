@@ -1,8 +1,8 @@
 package org.wololo.jts2geojson
 
 import org.scalatest.WordSpec
-import com.vividsolutions.jts.geom.GeometryFactory
-import com.vividsolutions.jts.geom.Coordinate
+import org.locationtech.jts.geom.GeometryFactory
+import org.locationtech.jts.geom.Coordinate
 import org.wololo.geojson.Feature
 import org.wololo.geojson.FeatureCollection
 
