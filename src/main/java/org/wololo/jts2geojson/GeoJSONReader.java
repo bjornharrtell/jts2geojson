@@ -2,11 +2,11 @@ package org.wololo.jts2geojson;
 
 import org.wololo.geojson.*;
 
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.LinearRing;
-import com.vividsolutions.jts.geom.PrecisionModel;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.PrecisionModel;
 
 public class GeoJSONReader {
     final static GeometryFactory factory = new GeometryFactory(
@@ -51,7 +51,7 @@ public class GeoJSONReader {
 
     Geometry convert(MultiLineString multiLineString) {
         int size = multiLineString.getCoordinates().length;
-        com.vividsolutions.jts.geom.LineString[] lineStrings = new com.vividsolutions.jts.geom.LineString[size];
+        org.locationtech.jts.geom.LineString[] lineStrings = new org.locationtech.jts.geom.LineString[size];
         for (int i = 0; i < size; i++) {
             lineStrings[i] = factory.createLineString(convert(multiLineString.getCoordinates()[i]));
         }
@@ -62,7 +62,7 @@ public class GeoJSONReader {
         return convertToPolygon(polygon.getCoordinates());
     }
 
-    com.vividsolutions.jts.geom.Polygon convertToPolygon(double[][][] coordinates) {
+    org.locationtech.jts.geom.Polygon convertToPolygon(double[][][] coordinates) {
         LinearRing shell = factory.createLinearRing(convert(coordinates[0]));
 
         if (coordinates.length > 1) {
@@ -79,7 +79,7 @@ public class GeoJSONReader {
 
     Geometry convert(MultiPolygon multiPolygon) {
         int size = multiPolygon.getCoordinates().length;
-        com.vividsolutions.jts.geom.Polygon[] polygons = new com.vividsolutions.jts.geom.Polygon[size];
+        org.locationtech.jts.geom.Polygon[] polygons = new org.locationtech.jts.geom.Polygon[size];
         for (int i = 0; i < size; i++) {
             polygons[i] = convertToPolygon(multiPolygon.getCoordinates()[i]);
         }
@@ -88,7 +88,7 @@ public class GeoJSONReader {
 
     Geometry convert(GeometryCollection gc) {
         int size = gc.getGeometries().length;
-        com.vividsolutions.jts.geom.Geometry[] geometries = new com.vividsolutions.jts.geom.Geometry[size];
+        org.locationtech.jts.geom.Geometry[] geometries = new org.locationtech.jts.geom.Geometry[size];
         for (int i = 0; i < size; i++) {
             geometries[i] = read(gc.getGeometries()[i]);
         }
