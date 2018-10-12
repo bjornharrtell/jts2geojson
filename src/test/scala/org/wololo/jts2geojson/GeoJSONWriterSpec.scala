@@ -48,7 +48,7 @@ class GeoJSONWriterSpec extends WordSpec {
       }
 
       "expected result for MultiPoint" in {
-        val multiPoint = factory.createMultiPoint(lineString.getCoordinates())
+        val multiPoint = factory.createMultiPointFromCoords(lineString.getCoordinates())
         val json = writer.write(multiPoint)
         assert("""{"type":"MultiPoint","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
       }

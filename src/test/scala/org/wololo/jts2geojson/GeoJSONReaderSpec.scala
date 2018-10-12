@@ -37,8 +37,8 @@ class GeoJSONReaderSpec extends WordSpec {
       }
 
       "expected result for MultiPoint" in {
-        val expected = factory.createMultiPoint(coordArray)
-        val expectedSrid = factorySrid.createMultiPoint(coordArray)
+        val expected = factory.createMultiPointFromCoords(coordArray)
+        val expectedSrid = factorySrid.createMultiPointFromCoords(coordArray)
         val json = """{"type":"MultiPoint","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}"""
 
         var geometry = reader.read(json)

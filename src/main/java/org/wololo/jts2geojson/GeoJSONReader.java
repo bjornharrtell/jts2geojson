@@ -57,7 +57,7 @@ public class GeoJSONReader {
     }
 
     Geometry convert(MultiPoint multiPoint, GeometryFactory factory) {
-        return factory.createMultiPoint(convert(multiPoint.getCoordinates()));
+        return factory.createMultiPointFromCoords(convert(multiPoint.getCoordinates()));
     }
 
     Geometry convert(LineString lineString, GeometryFactory factory) {
