@@ -33,12 +33,6 @@
 		<maven>3.0.4</maven>
 	</prerequisites>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>9</version>
-	</parent>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.scala-lang</groupId>
