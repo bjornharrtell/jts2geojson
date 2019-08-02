@@ -102,11 +102,11 @@ public class GeoJSONWriter {
     }
 
     double[] convert(Coordinate coordinate) {
-        if(Double.isNaN( coordinate.z )) {
+        if(Double.isNaN( coordinate.getZ() )) {
             return new double[] { coordinate.x, coordinate.y };
         }
         else {
-            return new double[] { coordinate.x, coordinate.y, coordinate.z };
+            return new double[] { coordinate.x, coordinate.y, coordinate.getZ() };
         }
     }
 
