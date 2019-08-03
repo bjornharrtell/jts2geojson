@@ -10,7 +10,7 @@ This Java library can convert JTS geometries to GeoJSON and back. Its API is sim
 <dependency>
     <groupId>org.wololo</groupId>
     <artifactId>jts2geojson</artifactId>
-    <version>0.12.0</version>
+    <version>0.14.1</version>
 </dependency>
 ```
 
