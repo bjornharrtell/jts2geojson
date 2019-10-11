@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.wololo</groupId>
 	<artifactId>jts2geojson</artifactId>
-	<version>0.14.2</version>
+	<version>0.14.3</version>
 	<packaging>jar</packaging>
 	<name>jts2geojson</name>
 	<description>JTS to GeoJSON converter</description>
@@ -37,19 +37,19 @@
 		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
-			<version>2.12.8</version>
+			<version>2.12.10</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.scalatest</groupId>
 			<artifactId>scalatest_2.12</artifactId>
-			<version>3.0.7</version>
+			<version>3.0.8</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.scalactic</groupId>
 			<artifactId>scalactic_2.12</artifactId>
-			<version>3.0.7</version>
+			<version>3.0.8</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -60,12 +60,12 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.9.2</version>
+			<version>2.10.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.9</version>
+			<version>2.10.0.pr1</version>
 		</dependency>
 	</dependencies>
 
@@ -90,7 +90,7 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
-				<version>4.0.2</version>
+				<version>4.2.0</version>
 				<executions>
 					<execution>
 						<goals>
@@ -137,7 +137,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
