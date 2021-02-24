@@ -20,6 +20,7 @@ class GeoJSONWriterSpec extends WordSpec {
         new Coordinate(1, 2),
         new Coordinate(2, 2),
         new Coordinate(1, 1)))
+
       val polygon = factory.createPolygon(lineString.getCoordinates())
 
       "expected result for Point" in {
@@ -39,6 +40,12 @@ class GeoJSONWriterSpec extends WordSpec {
 
       "expected result for LineString with id" in {
         val json = writer.write(lineString)
+        assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
+      }
+
+      "expected result for LinearString with id" in {
+        val ring = factory.createLinearRing(lineString.getCoordinates)
+        val json = writer.write(ring)
         assert("""{"type":"LineString","coordinates":[[1.0,1.0],[1.0,2.0],[2.0,2.0],[1.0,1.0]]}""" === json.toString)
       }
 
