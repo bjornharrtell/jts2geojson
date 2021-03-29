@@ -2,17 +2,8 @@ package org.wololo.jts2geojson;
 
 import java.util.List;
 
+import org.locationtech.jts.geom.*;
 import org.wololo.geojson.Feature;
-
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryCollection;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.MultiLineString;
-import org.locationtech.jts.geom.MultiPoint;
-import org.locationtech.jts.geom.MultiPolygon;
-import org.locationtech.jts.geom.Point;
-import org.locationtech.jts.geom.Polygon;
 
 public class GeoJSONWriter {
 
@@ -24,6 +15,8 @@ public class GeoJSONWriter {
             return convert((Point) geometry);
         } else if (c.equals(LineString.class)) {
             return convert((LineString) geometry);
+        } else if (c.equals(LinearRing.class)) {
+            return convert((LinearRing) geometry);
         } else if (c.equals(Polygon.class)) {
             return convert((Polygon) geometry);
         } else if (c.equals(MultiPoint.class)) {
@@ -62,6 +55,11 @@ public class GeoJSONWriter {
     org.wololo.geojson.LineString convert(LineString lineString) {
         return new org.wololo.geojson.LineString(
                 convert(lineString.getCoordinates()));
+    }
+
+    org.wololo.geojson.LineString convert(LinearRing ringString) {
+        return new org.wololo.geojson.LineString(
+                convert(ringString.getCoordinates()));
     }
 
     org.wololo.geojson.MultiLineString convert(MultiLineString multiLineString) {
