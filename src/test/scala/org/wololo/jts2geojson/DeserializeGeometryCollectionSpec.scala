@@ -1,17 +1,17 @@
 package org.wololo.jts2geojson
 
-import java.util.HashMap
-
 import org.scalatest.WordSpec
 import org.wololo.geojson._
 
+import java.util.HashMap
+
 class DeserializeGeometryCollectionSpec extends WordSpec {
-    "GeoJSONFactory" when {
-      "parsing GeoJSON to object" should {
-        val geometry = new Point(Array(1, 1))
-        val properties = new HashMap[String, Object]()
-        properties.put("test", 1.asInstanceOf[Object])
-        val feature = new Feature(geometry, properties)
+  "GeoJSONFactory" when {
+    "parsing GeoJSON to object" should {
+      val geometry = new Point(Array(1, 1))
+      val properties = new HashMap[String, Object]()
+      properties.put("test", 1.asInstanceOf[Object])
+      val feature = new Feature(geometry, properties)
 
 
         "deserialize GeometryCollection successfully" in {
@@ -27,7 +27,13 @@ class DeserializeGeometryCollectionSpec extends WordSpec {
           assert(point.getCoordinates.toSeq == Seq(1.1, 2.2))
         }
 
-      }
+        "deserialize GeometryCollection successfully if using ObjectMapper" in {
+          val geoJSON = """{ "otherProperty" : "a", "geometry" : {"type": "GeometryCollection", "geometries": [{"type": "Point",  "coordinates": [1.1, 2.2] }]}}"""
+          val value = SampleClassWithGeoJsonField.read(geoJSON)
+          assert(value.isInstanceOf[SampleClassWithGeoJsonField])
+        }
+
+    }
 
     }
 }
