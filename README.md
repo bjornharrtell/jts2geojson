@@ -50,4 +50,3 @@ JTS does not have anything like GeoJSON Feature or FeatureCollection but they ca
   GeoJSON json = writer.write(features);
 
 ```
-
