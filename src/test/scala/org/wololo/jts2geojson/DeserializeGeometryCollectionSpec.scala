@@ -27,6 +27,12 @@ class DeserializeGeometryCollectionSpec extends WordSpec {
           assert(point.getCoordinates.toSeq == Seq(1.1, 2.2))
         }
 
+        "deserialize GeometryCollection successfully if using ObjectMapper" in {
+          val geoJSON = """{ "geometry" : {"type": "GeometryCollection", "geometries": [{"type": "Point",  "coordinates": [1.1, 2.2] }]}}"""
+          val value = DataFactory.fromJson(geoJSON)
+          assert(value.isInstanceOf[Data])
+        }
+
       }
 
     }
