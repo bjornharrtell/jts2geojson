@@ -42,7 +42,7 @@ JTS does not have anything like GeoJSON Feature or FeatureCollection but they ca
   // create and serialize a FeatureCollection
   List<Features> features = new ArrayList<Features>();
   Map<String, Object> properties = new HashMap<String, Object>();
-  features.add(new Feature(geometry, properties);
+  features.add(new Feature(geometry, properties));
   GeoJSONWriter writer = new GeoJSONWriter();
   GeoJSON json = writer.write(features);
 ```
