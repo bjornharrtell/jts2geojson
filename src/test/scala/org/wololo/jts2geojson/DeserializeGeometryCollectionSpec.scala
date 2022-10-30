@@ -2,10 +2,10 @@ package org.wololo.jts2geojson
 
 import java.util.HashMap
 
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.wololo.geojson._
 
-class DeserializeGeometryCollectionSpec extends WordSpec {
+class DeserializeGeometryCollectionSpec extends AnyWordSpec {
     "GeoJSONFactory" when {
       "parsing GeoJSON to object" should {
         val geometry = new Point(Array(1, 1))

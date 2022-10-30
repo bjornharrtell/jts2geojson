@@ -4,9 +4,9 @@ import org.locationtech.jts.geom.Coordinate
 import org.locationtech.jts.geom.GeometryFactory
 import org.locationtech.jts.geom.PrecisionModel
 
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
-class GeoJSONReaderSpec extends WordSpec {
+class GeoJSONReaderSpec extends AnyWordSpec {
   "GeoJSONReader" when {
     "reading JTS object from GeoJSON" should {
 

@@ -1,12 +1,12 @@
 package org.wololo.jts2geojson
 
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.locationtech.jts.geom.GeometryFactory
 import org.locationtech.jts.geom.Coordinate
 import org.wololo.geojson.Feature
 import org.wololo.geojson.FeatureCollection
 
-class GeoJSONWriterSpec extends WordSpec {
+class GeoJSONWriterSpec extends AnyWordSpec {
   "GeoJSONWriter" when {
     "writing GeoJSON from JTS object" should {
 
