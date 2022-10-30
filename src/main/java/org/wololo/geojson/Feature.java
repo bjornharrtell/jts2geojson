@@ -14,13 +14,13 @@ public class Feature extends GeoJSON {
     private final Object id;
     private final Geometry geometry;
     private final Map<String, Object> properties;
-    
+
     public Feature(
             @JsonProperty("geometry") Geometry geometry,
             @JsonProperty("properties") Map<String,Object> properties) {
         this(null, geometry, properties);
     }
-    
+
     @JsonCreator
     public Feature(
             @JsonProperty("id") Object id,

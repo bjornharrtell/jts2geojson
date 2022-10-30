@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({"type", "features"})
 public class FeatureCollection extends GeoJSON {
     private final Feature[] features;
-    
+
     @JsonCreator
     public FeatureCollection(@JsonProperty("features") Feature[] features) {
         super();
