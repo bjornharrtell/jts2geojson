@@ -17,7 +17,6 @@ This Java library can convert JTS geometries to GeoJSON and back. Its API is sim
 ## Usage
 
 ```java
-
   GeoJSONWriter writer = new GeoJSONWriter();
   GeoJSON json = writer.write(geometry);
   String jsonstring = json.toString();
