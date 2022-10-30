@@ -7,18 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  build-jdk8:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 8
-      uses: actions/setup-java@v2
-      with:
-        java-version: '8'
-        distribution: 'temurin'
-        cache: maven
-    - name: Test with Maven
-      run: mvn -Dmaven.javadoc.skip=true -Dgpg.skip=true -B test
   build-jdk11:
     runs-on: ubuntu-latest
     steps:
