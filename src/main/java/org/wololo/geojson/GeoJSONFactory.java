@@ -48,7 +48,7 @@ public class GeoJSONFactory {
 
     private static Geometry readGeometry(JsonNode node)
             throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException {
-        if (!node.isNull())
+        if (node != null && !node.isNull())
             return readGeometry(node, node.get("type").asText());
         else
             return null;

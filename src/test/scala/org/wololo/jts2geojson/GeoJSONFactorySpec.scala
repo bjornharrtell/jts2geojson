@@ -6,6 +6,16 @@ import java.util.HashMap
 
 class GeoJSONFactorySpec extends AnyWordSpec {
     "GeoJSONFactory" when {
+      "dealing with badly encoded file" should {
+        "read missing geometry field as null" in {
+          val json = """{"type":"Feature","properties":{"test":1}}"""
+          val expected = """{"type":"Feature","geometry":null,"properties":{"test":1}}"""
+
+          val geojson = GeoJSONFactory.create(json)
+          assert(geojson.toString == expected)
+        }
+      }
+
       "parsing GeoJSON to object" should {
         val geometry = new Point(Array(1, 1))
         val properties = new HashMap[String, Object]()
